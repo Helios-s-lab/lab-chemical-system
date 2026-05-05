@@ -18,39 +18,26 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// test-db 路由
-app.get('/test-db', async (req, res) => {
+app.get('/api/test-db', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW() AS currentTime');
-    res.json({
-      message: '数据库连接成功',
-      data: result.rows
-    });
+    res.json({ message: '数据库连接成功', data: result.rows });
   } catch (error) {
     console.error('数据库连接失败:', error);
-    res.status(500).json({
-      message: '数据库连接失败',
-      error: error.message
-    });
+    res.status(500).json({ message: '数据库连接失败', error: error.message });
   }
 });
 
-// test-users 路由 — 注意表名要改成 sys_user
-app.get('/test-users', async (req, res) => {
+app.get('/api/test-users', async (req, res) => {
   try {
     const result = await pool.query('SELECT user_id, username, real_name, status FROM sys_user');
-    res.json({
-      message: '用户数据获取成功',
-      data: result.rows
-    });
+    res.json({ message: '用户数据获取成功', data: result.rows });
   } catch (error) {
     console.error('查询用户失败:', error);
-    res.status(500).json({
-      message: '查询用户失败',
-      error: error.message
-    });
+    res.status(500).json({ message: '查询用户失败', error: error.message });
   }
 });
+
 
 // API 路由
 app.use('/api/auth', authRoutes);
@@ -60,8 +47,6 @@ app.use('/api/chemicals', chemicalRoutes);
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/apply', applyRoutes);
 app.use('/api/events', eventRoutes);
-
-
 
 // 导出 app 实例（给 Vercel Serverless 使用）
 module.exports = app;
