@@ -61,13 +61,7 @@ app.use('/api/inventory', inventoryRoutes);
 app.use('/api/apply', applyRoutes);
 app.use('/api/events', eventRoutes);
 
-// 托管前端静态文件
-app.use(express.static(path.join(__dirname, 'dist')));
 
-// 解决前端路由刷新问题
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 // 导出 app 实例（给 Vercel Serverless 使用）
 module.exports = app;
