@@ -69,8 +69,13 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
+// 导出 app 实例（给 Vercel Serverless 使用）
+module.exports = app;
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-});
+// 如果当前环境不是 Vercel（即没有 IS_VERCEL 环境变量），则启动本地服务器
+if (!process.env.IS_VERCEL) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running at http://localhost:${PORT}`);
+  });
+}

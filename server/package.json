@@ -18,7 +18,8 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.3",
-    "pg": "^8.20.0"
+    "pg": "^8.20.0",
+    "serverless-http": "^4.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
