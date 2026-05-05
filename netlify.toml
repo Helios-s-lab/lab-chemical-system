@@ -1,10 +1,9 @@
 [build]
-  base = "client"
-  command = "npm run build"
-  publish = "dist"
+  command = "cd client && npm run build"
+  publish = "client/dist"
 
 [build.environment]
-  IS_VERCEL = "1"    # 让后端不启动监听
+  IS_VERCEL = "1"
 
 [functions]
   directory = "netlify/functions"
