@@ -6,20 +6,20 @@ exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const [rows] = await pool.query(
+    const result = await pool.query(
       `SELECT u.user_id, u.username, u.password, u.real_name, u.role_id, r.role_name
-       FROM user u
+       FROM sys_user u
        JOIN role r ON u.role_id = r.role_id
-       WHERE u.username = ? AND u.status = '正常'`,
+       WHERE u.username = $1 AND u.status = '正常'`,
       [username]
     );
 
+    const rows = result.rows;
     if (rows.length === 0) {
       return res.status(401).json({ message: '用户不存在' });
     }
 
     const user = rows[0];
-
     if (user.password !== password) {
       return res.status(401).json({ message: '密码错误' });
     }
